@@ -1,0 +1,13 @@
+﻿<h3>Product</h3>
+
+<img src="data:image/png;base64, @p.Image" />
+<p>@p.Name</p>
+<p>@p.Desc</p>
+<p>@p.Price</p>
+<p>@p.Colour</p>
+
+@code
+{
+    [Parameter]
+    public Product p { get; set; }
+}

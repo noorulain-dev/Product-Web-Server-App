@@ -1,0 +1,47 @@
+﻿@page "/"
+@inject IDatabase db
+@inject NavigationManager mynav
+
+<h1>List of Products </h1>
+
+@foreach (var p in product)
+{
+<div>
+    <img src="data:image/png;base64, @p.Image" height="100"/>
+    <p>Name: @p.Name</p>
+    <p>Price: @p.Price</p>
+
+    <button @onclick="() => deleteBtn(p)">Delete Product</button>
+    <button @onclick="() => editBtn(p)">Edit Product</button>
+    <button @onclick="() => descBtn(p)">Display Description</button>
+    <hr>
+</div>
+}
+
+@code
+{
+
+    private List<Product> product = new List<Product>();
+    protected override async Task OnInitializedAsync()
+    {
+        product = await db.GetAll();
+    }
+
+    private void deleteBtn(Product p)
+    {
+        db.Delete(p.Id);
+        db.Initialise();
+        db.GetAll();
+    }
+
+    private void editBtn(Product p)
+    {
+        mynav.NavigateTo("create/" + p.Id);
+    }
+
+    private void descBtn(Product p)
+    {
+        mynav.NavigateTo("ProductDesc/" + p.Id);
+    }
+
+}

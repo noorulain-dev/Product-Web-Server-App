@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "y/vOIJmoSEq5QAlsdqKNNB/AdFCCbVEMYMr9zTwUfrABo/uU/UlxE3jiv/zW+Yg3xdXyGnzrMvmSxHMe0qnppQ==",
+  "success": true,
+  "projectFilePath": "D:\\Computer Science\\Semester 05\\Creating Secure and Scalable Software\\Week 03\\pt3_01\\PT3_01\\PT3_01.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\noor_\\.nuget\\packages\\microsoft.data.sqlite\\6.0.9\\microsoft.data.sqlite.6.0.9.nupkg.sha512",
+    "C:\\Users\\noor_\\.nuget\\packages\\microsoft.data.sqlite.core\\6.0.9\\microsoft.data.sqlite.core.6.0.9.nupkg.sha512",
+    "C:\\Users\\noor_\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.6\\sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512",
+    "C:\\Users\\noor_\\.nuget\\packages\\sqlitepclraw.core\\2.0.6\\sqlitepclraw.core.2.0.6.nupkg.sha512",
+    "C:\\Users\\noor_\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.6\\sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",
+    "C:\\Users\\noor_\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.0.6\\sqlitepclraw.provider.e_sqlite3.2.0.6.nupkg.sha512",
+    "C:\\Users\\noor_\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+  ],
+  "logs": []
+}

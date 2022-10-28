@@ -1,0 +1,34 @@
+@page "/ProductDesc/{id:guid}"
+@inject IDatabase db
+@using System.Web;
+@using System.IO;
+@using System.Drawing;
+
+
+<h1>Product Description</h1>
+<div>
+    <a href="#">
+        <img src="data:image/png;base64, @product.Image" alt="Image of the product" height="100">
+    </a>
+    <p>Name:  @product.Name</p>
+    <br />
+    <p>Description:  @product.Desc</p>
+    <br />
+    <p>Colour:  @product.Colour</p>
+    <br />
+    <p>Price:  @product.Price</p>
+</div>
+
+@code{
+
+    [Parameter]
+    public Guid id { get; set; }
+
+    Product product = new Product();
+
+    protected override async Task OnInitializedAsync()
+    {
+        product = await db.GetOne(id);
+    }
+
+}

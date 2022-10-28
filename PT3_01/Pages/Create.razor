@@ -1,0 +1,118 @@
+﻿@page "/create"
+@page "/create/{id:guid}"
+@inject IDatabase db
+@using System.Web;
+@using System.IO;
+@using System.Drawing;
+
+    <h1>Create a product</h1>
+
+    <EditForm Model="createForm" OnSubmit="OnSubmit">
+        <label>Name</label>
+        <InputText @bind-Value="createForm.Name"></InputText>
+
+        <label>Desc</label>
+        <InputText @bind-Value="createForm.Desc"></InputText>
+
+        <label>Colour</label>
+        <InputText @bind-Value="createForm.Colour"></InputText>
+
+        <label>Price</label>
+        <InputText @bind-Value="createForm.PriceStr"></InputText>
+
+        
+        @if (id != Guid.Empty)
+        {
+            <img src="data:image/png;base64, @loadedProduct.Image" height="80"/>
+        }
+        <InputFile OnChange="OnFileUpload"></InputFile>
+
+        <button type="submit">Submit</button>
+
+    </EditForm>
+
+    @code{
+
+        private Product loadedProduct = new Product();
+
+        class CreateForm
+        {
+            public String Name { get; set; }
+            public String Colour { get; set; }
+            public String Desc { get; set; }
+            public String PriceStr { get; set; }
+            public String ImgBase64 { get; set; }
+            public String Image { get; set; }
+
+        }
+
+        [Parameter]
+        public Guid id { get; set; }
+
+        private CreateForm createForm = new CreateForm();
+
+        async void OnFileUpload(InputFileChangeEventArgs arg)
+        {
+            using (var input = arg.File.OpenReadStream())
+            {
+                var buffer = new Byte[input.Length];
+
+                await input.ReadAsync(buffer, 0, buffer.Length);
+
+                createForm.ImgBase64 = Convert.ToBase64String(buffer);
+            }
+        }
+
+        protected override void OnParametersSet()
+        {
+            db.Initialise();
+
+            if (id != Guid.Empty)
+            {
+                Task<Product> p = db.GetOne(id);
+                loadedProduct = p.Result;
+                createForm.Name = p.Result.Name;
+                createForm.Desc = p.Result.Desc;
+                createForm.Colour = p.Result.Colour;
+                createForm.ImgBase64 = p.Result.Image;
+                createForm.PriceStr = p.Result.Price.ToString();
+            }
+        }
+
+        void OnSubmit()
+        {
+
+            if (id != Guid.Empty)
+            {
+                var newProduct = new Product
+                {
+                    Id = id,
+                    Name = createForm.Name,
+                    Desc = createForm.Desc,
+                    Colour = createForm.Colour,
+                    Image = createForm.ImgBase64,
+                    Price = double.Parse(createForm.PriceStr)
+                };
+
+                loadedProduct = newProduct;
+
+                db.Update(newProduct);
+
+            }
+            else
+            {
+                var newProduct = new Product
+                {
+                    Id = Guid.NewGuid(),
+                    Name = createForm.Name,
+                    Desc = createForm.Desc,
+                    Colour = createForm.Colour,
+                    Image = createForm.ImgBase64,
+                    Price = double.Parse(createForm.PriceStr)
+                };
+                db.Insert(newProduct);
+            }
+
+        }
+
+    }
